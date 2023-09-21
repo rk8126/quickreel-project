@@ -1,0 +1,55 @@
+<div>
+	{{>header}}
+	<div class="wrapper">
+		<div class="container-fluid d-flex justify-content-center mt-5">
+			<div class="row">
+				<form id="upload-video" enctype="multipart/form-data"
+					onsubmit="submitButton.disabled = true; return true;">
+					<input type="text" name="googleCode" id="googleCode" hidden value="{{code}}">
+					<div class="d-flex my-2">
+						<label>S3 Key: </label>
+						<input type="text" name="s3Key" id="s3Key" class="ms-4" placeholder="Please enter s3 key" required>
+					</div>
+					<div class="d-flex my-2">
+						<label>Video Title: </label>
+						<input type="text" name="title" id="title" class="ms-4" placeholder="Please enter title" required>
+					</div>
+					<div class="d-flex my-2">
+						<label>Vidoe Description: </label>
+						<input type="text" name="description" id="description" class="ms-4" placeholder="Please enter description" required>
+					</div>
+					<div class="d-flex my-2">
+						<label>Vidoe Tag: </label>
+						<input type="text" name="tag" id="tag" class="ms-4" placeholder="Please enter tag" required>
+					</div>
+					<div class="form-floating my-2">
+						<button type="submit" id="submitButton">upload</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$("form#upload-video").submit(function (e) {
+    e.preventDefault();
+    const form = document.getElementById('upload-video')
+    const submitButton = form.querySelector('#submitButton')
+
+    const s3Key = form.querySelector('#s3Key').value
+	const title = form.querySelector('#title').value
+	const description = form.querySelector('#description').value
+	const tag = form.querySelector('#tag').value
+	const googleCode = form.querySelector('#googleCode').value
+    axios.post(`/video/trim-and-upload`, {s3Key, title, description, tag, googleCode}).then(() => {
+		submitButton.disabled = false
+		return alert("Successfully uploaded")
+    }).catch(function (error) {
+        const errorMessage = error?.response?.data?.message
+        submitButton.disabled = false
+        console.log('Error in uploading video on youtube', errorMessage || error?.message)
+		alert(`Error in uploading video on youtube : ${errorMessage || error?.message}`)
+    });
+});
+</script>
