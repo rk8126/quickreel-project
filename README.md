@@ -5,6 +5,7 @@ https://stackoverflow.com/questions/25803937/video-upload-using-youtube-google-a
 
 # Note
     Please add the env variables
+    GOOGLE_CALLBACK_URL = "http://localhost:3000/google/callback"
 
 # Functionality
     1. First of all We have to run the server.
