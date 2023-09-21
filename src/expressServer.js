@@ -6,13 +6,10 @@ const app = require('./server').app
 var auth = false
 
 app.get('/', (req, res) => {
-    let url
-    if(!auth){
-        url = oauth2Client.generateAuthUrl({
-            access_type: 'offline',
-            scope: 'https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile'
-        });
-    }
+    const url = oauth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: 'https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/userinfo.profile'
+    });
     res.render('login', {url})
 });
 app.get('/google/callback', (req, res) => {

@@ -44,12 +44,14 @@
 	const googleCode = form.querySelector('#googleCode').value
     axios.post(`/video/trim-and-upload`, {s3Key, title, description, tag, googleCode}).then(() => {
 		submitButton.disabled = false
+		window.location = '/';
 		return alert("Successfully uploaded")
     }).catch(function (error) {
         const errorMessage = error?.response?.data?.message
         submitButton.disabled = false
         console.log('Error in uploading video on youtube', errorMessage || error?.message)
 		alert(`Error in uploading video on youtube : ${errorMessage || error?.message}`)
+		window.location = '/';
     });
 });
 </script>
