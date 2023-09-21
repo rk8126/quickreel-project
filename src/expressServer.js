@@ -3,8 +3,6 @@ const { oauth2Client } = require('./server');
 const app = require('./server').app
 
 
-var auth = false
-
 app.get('/', (req, res) => {
     const url = oauth2Client.generateAuthUrl({
         access_type: 'offline',
